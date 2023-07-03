@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Checkout</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input[type="number"],
+        input[type="submit"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+
+            border-radius: 4px;
+        }
+
+        input[type="submit"] {
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Checkout</h1>
+        <p>Total Bayar: <span id="totalBayar"></span></p>
+        <form id="checkoutForm">
+            <label for="namaPelanggan">Nama Pelanggan   :</label>
+            <input type="text" id="namaPelanggan" required>
+
+            <label for="nomorMeja">Nomor Meja   :</label>
+            <input type="text" id="nomorMeja" required>
+            <label for="uangBayar">Uang Bayar   :</label>
+            <input type="text|number" id="uangBayar" required>
+            <input type="submit" value="Bayar">
+        </form>
+    </div>
+
+    <script>
+        // Mendapatkan nilai total bayar dari URL
+        let urlParams = new URLSearchParams(window.location.search);
+        let totalBayar = urlParams.get("totalBayar")
+        console.log(`Total Bayar: ${totalBayar}`);
+        document.getElementById("totalBayar").textContent = totalBayar;
+
+        document.getElementById("checkoutForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            let namaPelanggan = document.getElementById("namaPelanggan").value;
+            let nomorMeja = document.getElementById("nomorMeja").value;
+            let uangBayar = parseInt(document.getElementById("uangBayar").value);
+
+            let totalHarga = parseInt(totalBayar);
+            if (uangBayar < totalHarga) {
+                alert("Maaf, uang bayar tidak cukup!");
+            } else {
+                let kembalian = uangBayar - totalHarga;
+                window.location.href = "struk.html" + "?nama=" + encodeURIComponent(namaPelanggan) +
+                    "&nomorMeja=" + encodeURIComponent(nomorMeja) +
+                    "&totalHarga=" + encodeURIComponent(totalHarga) +
+                    "&kembalian=" + encodeURIComponent(kembalian);
+            }
+        });
+    </script>
+</body>
+
+</html>

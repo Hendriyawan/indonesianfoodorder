@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Struk Pembayaran</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        p {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Struk Pembayaran</h1>
+        <p>Nama Pelanggan: <span id="namaPelanggan"></span></p>
+        <p>Nomor Meja: <span id="nomorMeja"></span></p>
+        <p>Total Harga: Rp<span id="totalHarga"></span></p>
+        <p>Kembalian: Rp<span id="kembalian"></span></p>
+    </div>
+
+    <script>
+        let urlParams = new URLSearchParams(window.location.search);
+        let namaPelanggan = decodeURIComponent(urlParams.get("nama"));
+        let nomorMeja = decodeURIComponent(urlParams.get("nomorMeja"));
+        let totalHarga = decodeURIComponent(urlParams.get("totalHarga"));
+        let kembalian = decodeURIComponent(urlParams.get("kembalian"));
+
+        document.getElementById("namaPelanggan").innerText = namaPelanggan;
+        document.getElementById("nomorMeja").innerText = nomorMeja;
+        document.getElementById("totalHarga").innerText = totalHarga;
+        document.getElementById("kembalian").innerText = kembalian;
+    </script>
+</body>
+
+</html>

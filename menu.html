@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Indonesian Food</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .checkout-btn {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .cart-list {
+            margin-top: 20px;
+        }
+
+        .cart-list h2 {
+            margin-bottom: 10px;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .cart-item .name {
+            flex: 1;
+            margin-right: 8px;
+        }
+
+        .cart-item .quantity {
+            font-weight: bold;
+        }
+
+        .quantity-select {
+            display: flex;
+            align-items: center;
+        }
+
+        .quantity-select input {
+            width: 50px;
+            margin-right: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Daftar Menu</h1>
+        <table>
+            <tr>
+                <th>No</th>
+                <th>Menu</th>
+                <th>Harga</th>
+                <th>Aksi</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>Nasi Goreng Special</td>
+                <td>13500</td>
+                <td>
+                    <div class="quantity-select">
+                        <input type="number" id="quantity1" min="0">
+                        <button onclick="tambahPesanan(1)">Add to Cart</button>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Nasi Kebuli</td>
+                <td>17000</td>
+                <td>
+                    <div class="quantity-select">
+                        <input type="number" id="quantity2" min="0">
+                        <button onclick="tambahPesanan(2)">Add to Cart</button>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Nasi Ayam Kremes</td>
+                <td>13000</td>
+                <td>
+                    <div class="quantity-select">
+                        <input type="number" id="quantity3" min="0">
+                        <button onclick="tambahPesanan(3)">Add to Cart</button>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>Nasi Sambel Bakar</td>
+                <td>14000</td>
+                <td>
+                    <div class="quantity-select">
+                        <input type="number" id="quantity4" min="0">
+                        <button onclick="tambahPesanan(4)">Add to Cart</button>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>Nasi Goreng Ati</td>
+                <td>13000</td>
+                <td>
+                    <div class="quantity-select">
+                        <input type="number" id="quantity5" min="0">
+                        <button onclick="tambahPesanan(5)">Add to Cart</button>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <div class="cart-list">
+            <h2>Daftar Makanan Dipesan:</h2>
+            <ul id="cartItems"></ul>
+        </div>
+        <div class="checkout-btn">
+            <p>Total Bayar: <span id="totalBayar">0</span></p>
+
+            <button onclick="location.href='checkout.html?totalBayar=' + document.getElementById('totalBayar').textContent">Checkout</button>
+        </div>
+    </div>
+
+    <script>
+        let selectedItems = [];
+        let quantities = [];
+
+        function tambahPesanan(selected) {
+            let quantity = parseInt(document.getElementById(`quantity${selected}`).value);
+            selectedItems.push(selected);
+            quantities.push(quantity);
+
+            // Menambahkan item ke daftar makanan dipesan
+            let menu = document.querySelector(`tr:nth-child(${selected + 1}) td:nth-child(2)`).textContent;
+            let listItem = document.createElement("li");
+            listItem.classList.add("cart-item");
+            listItem.innerHTML = `<span class="name">${menu}</span> x <span class="quantity">${quantity}</span>`;
+            document.getElementById("cartItems").appendChild(listItem);
+
+            // Menghitung total bayar
+            let totalBayar = 0;
+            for (let i = 0; i < selectedItems.length; i++) {
+                let item = selectedItems[i];
+                let itemHarga = parseInt(document.querySelector(`tr:nth-child(${item + 1}) td:nth-child(3)`).textContent);
+                totalBayar += itemHarga * quantities[i];
+            }
+            document.getElementById("totalBayar").textContent = totalBayar;
+        }
+    </script>
+</body>
+
+</html>
